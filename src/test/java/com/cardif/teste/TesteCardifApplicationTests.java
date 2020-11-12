@@ -14,7 +14,6 @@ class TesteCardifApplicationTests {
 	@Test
 	void contextLoads() {
 		Funcionario funcionario = new Funcionario();
-		funcionario.setNomeFuncionario("Anderson Oliveira");
 		funcionario.setDataNascFuncionario(LocalDate.parse("1982-10-11"));
 		
 		Assertions.assertEquals(38, funcionario.getIdadeFuncionario());

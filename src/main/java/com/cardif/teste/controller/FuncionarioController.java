@@ -62,4 +62,11 @@ public class FuncionarioController implements IRestController<Cargo>{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@GetMapping("/{id}/historico/depatamentos")
+	@ApiOperation(value = "Obter histórico de Departamentos do Funcionário por ID.")
+	public ResponseEntity<?> getHistoricoDepartamentos(@PathVariable Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
