@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cardif.teste.arquitetura.entity.BaseEntity;
 
-public class GenericServiceimpl<R extends JpaRepository<E, Long>, E extends BaseEntity> implements GenericService<E,R>{
+public class GenericServiceimpl<E extends BaseEntity, R extends JpaRepository<E, Long>> implements GenericService<E,R>{
 	
 	@Autowired
 	private R repository;
@@ -21,7 +21,7 @@ public class GenericServiceimpl<R extends JpaRepository<E, Long>, E extends Base
 	}
 
 	@Override
-	public Page<?> findAll(Pageable pageable) {
+	public Page<E> findAll(Pageable pageable) {
 		return repository.findAll(pageable);
 	}
 

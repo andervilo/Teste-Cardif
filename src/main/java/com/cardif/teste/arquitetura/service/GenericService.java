@@ -6,7 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GenericService<E extends Object, R extends JpaRepository<E, Long>> {
+import com.cardif.teste.arquitetura.entity.BaseEntity;
+
+public interface GenericService<E extends BaseEntity, R extends JpaRepository<E, Long>> {
 
 	public abstract List<?> findAll();
 

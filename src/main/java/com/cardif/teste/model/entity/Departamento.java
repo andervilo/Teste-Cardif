@@ -1,5 +1,7 @@
 package com.cardif.teste.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -19,7 +21,7 @@ public class Departamento extends BaseEntity {
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "departamentos")
-	private Set<Funcionario> funcionarios;
+	private List<Funcionario> funcionarios = new ArrayList<>();
 
 	public Departamento() {
 
@@ -33,12 +35,8 @@ public class Departamento extends BaseEntity {
 		this.nomeDepartamento = nomeDepartamento;
 	}
 
-	public Set<Funcionario> getFuncionarios() {
+	public List<Funcionario> getFuncionarios() {
 		return funcionarios;
-	}
-
-	public void setFuncionarios(Set<Funcionario> funcionarios) {
-		this.funcionarios = funcionarios;
 	}
 	
 	public void addFuncionario(Funcionario funcionario) {

@@ -7,6 +7,6 @@ import com.cardif.teste.model.entity.Cargo;
 import com.cardif.teste.repository.CargoRepository;
 
 @Service
-public class CargoService extends GenericServiceimpl<CargoRepository, Cargo>{
+public class CargoService extends GenericServiceimpl<Cargo, CargoRepository>{
 
 }

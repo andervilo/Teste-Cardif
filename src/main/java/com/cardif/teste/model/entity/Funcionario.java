@@ -1,7 +1,8 @@
 package com.cardif.teste.model.entity;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,6 +26,9 @@ public class Funcionario extends BaseEntity {
 
 	@Column(name = "funcionario_birthday")
 	private LocalDate dataNascFuncionario;
+	
+	@Transient
+	private int idadeFuncionario;
 
 	@Column(name = "funcionario_document")
 	private String documentoFuncionario;
@@ -38,7 +42,7 @@ public class Funcionario extends BaseEntity {
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "funcionario_departamento", joinColumns = @JoinColumn(name = "funcionario_id"), inverseJoinColumns = @JoinColumn(name = "departamento_id"))
-	private Set<Departamento> departamentos;
+	private List<Departamento> departamentos = new ArrayList<>();
 
 	public Funcionario() {
 	}
@@ -52,7 +56,8 @@ public class Funcionario extends BaseEntity {
 	}
 
 	public int getIdadeFuncionario() {
-		return DateUtils.diferencaEmAnos(LocalDate.now(), dataNascFuncionario);
+		this.idadeFuncionario = DateUtils.diferencaEmAnos(LocalDate.now(), dataNascFuncionario);
+		return this.idadeFuncionario;
 	}
 
 	public LocalDate getDataNascFuncionario() {
@@ -79,14 +84,6 @@ public class Funcionario extends BaseEntity {
 		this.cargo = cargo;
 	}
 
-	public Set<Departamento> getDepartamentos() {
-		return departamentos;
-	}
-
-	public void setDepartamentos(Set<Departamento> departamentos) {
-		this.departamentos = departamentos;
-	}
-
 	private void addDepartamento(Departamento departamento) {
 		if (this.departamentos.contains(departamento)) {
 			return;
@@ -106,8 +103,12 @@ public class Funcionario extends BaseEntity {
 	}
 
 	public void setDepartamento(Departamento departamento) {
-		this.addDepartamento(departamento);
 		this.departamento = departamento;
+		this.addDepartamento(this.departamento);
+	}
+
+	public List<Departamento> getDepartamentos() {
+		return departamentos;
 	}
 
 }
