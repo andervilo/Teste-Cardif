@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 
 import com.cardif.teste.arquitetura.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Departamento extends BaseEntity {
@@ -16,6 +17,7 @@ public class Departamento extends BaseEntity {
 	@Column(name = "departamento_name")
 	private String nomeDepartamento;
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "departamentos")
 	private Set<Funcionario> funcionarios;
 

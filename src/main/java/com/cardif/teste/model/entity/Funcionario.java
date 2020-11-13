@@ -13,6 +13,7 @@ import javax.persistence.Transient;
 
 import com.cardif.teste.arquitetura.entity.BaseEntity;
 import com.cardif.teste.utils.DateUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Funcionario extends BaseEntity {
@@ -30,13 +31,14 @@ public class Funcionario extends BaseEntity {
 
 	@ManyToOne
 	private Cargo cargo;
-	
+
+	@ManyToOne
+	private Departamento departamento;
+
+	@JsonIgnore
 	@ManyToMany
-	@JoinTable(
-			  name = "funcionario_departamento", 
-			  joinColumns = @JoinColumn(name = "funcionario_id"), 
-			  inverseJoinColumns = @JoinColumn(name = "departamento_id"))
-    private Set<Departamento> departamentos;
+	@JoinTable(name = "funcionario_departamento", joinColumns = @JoinColumn(name = "funcionario_id"), inverseJoinColumns = @JoinColumn(name = "departamento_id"))
+	private Set<Departamento> departamentos;
 
 	public Funcionario() {
 	}
@@ -50,7 +52,7 @@ public class Funcionario extends BaseEntity {
 	}
 
 	public int getIdadeFuncionario() {
-		return DateUtils.diferencaEmAnos(LocalDate.now(), dataNascFuncionario);		
+		return DateUtils.diferencaEmAnos(LocalDate.now(), dataNascFuncionario);
 	}
 
 	public LocalDate getDataNascFuncionario() {
@@ -84,19 +86,28 @@ public class Funcionario extends BaseEntity {
 	public void setDepartamentos(Set<Departamento> departamentos) {
 		this.departamentos = departamentos;
 	}
-	
-	public void addDepartamento(Departamento departamento) {
-		if(this.departamentos.contains(departamento)){
+
+	private void addDepartamento(Departamento departamento) {
+		if (this.departamentos.contains(departamento)) {
 			return;
 		}
 		this.departamentos.add(departamento);
 	}
-	
-	public void deleteFuncionario(Departamento departamento) {
-		if(!this.departamentos.contains(departamento)){
+
+	private void deleteDepartamento(Departamento departamento) {
+		if (!this.departamentos.contains(departamento)) {
 			return;
 		}
 		this.departamentos.remove(departamento);
+	}
+
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.addDepartamento(departamento);
+		this.departamento = departamento;
 	}
 
 }

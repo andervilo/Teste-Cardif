@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cardif.teste.arquitetura.controller.IRestController;
 import com.cardif.teste.model.entity.Cargo;
 
 import io.swagger.annotations.Api;
@@ -21,10 +20,9 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/api/cargos")
 @Api(tags = "Cargos")
-public class CargoController implements IRestController<Cargo>{
+public class CargoController {
 
 	@GetMapping("/")
-	@Override
 	@ApiOperation(value = "Obter Cargos.")
 	public ResponseEntity<?> listAll(Pageable pageable) {
 		// TODO Auto-generated method stub
@@ -32,7 +30,6 @@ public class CargoController implements IRestController<Cargo>{
 	}
 
 	@GetMapping("/{id}")
-	@Override
 	@ApiOperation(value = "Obter Cargo por ID.")
 	public ResponseEntity<?> showById(@PathVariable Long id) {
 		// TODO Auto-generated method stub
@@ -40,7 +37,6 @@ public class CargoController implements IRestController<Cargo>{
 	}
 
 	@PostMapping(value="/")
-	@Override
 	@ApiOperation(value = "Criar novo Cargo.")
 	public ResponseEntity<?> create(Cargo object, BindingResult result) {
 		// TODO Auto-generated method stub
@@ -48,7 +44,6 @@ public class CargoController implements IRestController<Cargo>{
 	}
 
 	@PutMapping(value="/{id}")
-	@Override
 	@ApiOperation(value = "Atualizar Cargo por ID.")
 	public ResponseEntity<?> update(@PathVariable Long id, Cargo object, Errors errors) {
 		// TODO Auto-generated method stub
@@ -56,7 +51,6 @@ public class CargoController implements IRestController<Cargo>{
 	}
 
 	@DeleteMapping("/{id}")
-	@Override
 	@ApiOperation(value = "Excluir Cargo por ID.")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		// TODO Auto-generated method stub
