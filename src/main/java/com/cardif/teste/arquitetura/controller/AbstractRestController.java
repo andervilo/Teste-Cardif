@@ -21,6 +21,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.cardif.teste.arquitetura.entity.BaseEntity;
 import com.cardif.teste.arquitetura.service.GenericService;
 
+import io.swagger.annotations.ApiOperation;
+
 @SuppressWarnings("rawtypes")
 public abstract class AbstractRestController<E extends BaseEntity, S extends GenericService>
 		implements IRestController<E> {
@@ -28,17 +30,19 @@ public abstract class AbstractRestController<E extends BaseEntity, S extends Gen
 	private S service;
 
 	@SuppressWarnings("unchecked")
-	@GetMapping("")
+	@GetMapping("/")
+	@ApiOperation(value = "Obter Lista.")
 	@Override
-	public ResponseEntity<Page<E>> listAll(Pageable pageable) {
+	public ResponseEntity<?> listAll(Pageable pageable) {
 		Page<E> page = (Page<E>) service.findAll(pageable);
 		return ResponseEntity.ok().body(page);
 	}
 
 	@SuppressWarnings("unchecked")
 	@GetMapping("/{id}")
+	@ApiOperation(value = "Obter por ID.")
 	@Override
-	public ResponseEntity<E> showById(@PathVariable Long id) {
+	public ResponseEntity<?> showById(@PathVariable Long id) {
 		E entity = (E) service.findById(id);
 		if (entity == null) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Recurso não encontrado!");
@@ -47,7 +51,8 @@ public abstract class AbstractRestController<E extends BaseEntity, S extends Gen
 	}
 
 	@SuppressWarnings("unchecked")
-	@PostMapping
+	@PostMapping("/")
+	@ApiOperation(value = "Criar.")
 	@Override
 	public ResponseEntity<E> create(@Valid @RequestBody E object) {
 
@@ -65,7 +70,8 @@ public abstract class AbstractRestController<E extends BaseEntity, S extends Gen
 	}
 
 	@SuppressWarnings("unchecked")
-	@PutMapping(value = "/{id}", consumes = "application/json")
+	@PutMapping("/{id}")
+	@ApiOperation(value = "Alterar.")
 	@Override
 	public ResponseEntity<E> update(Long id, @Valid E object) {
 		if (object == null) {
@@ -83,6 +89,7 @@ public abstract class AbstractRestController<E extends BaseEntity, S extends Gen
 
 	@SuppressWarnings("unchecked")
 	@DeleteMapping("/{id}")
+	@ApiOperation(value = "Excluir.")
 	@Override
 	public ResponseEntity<Map<String, String>> delete(@PathVariable Long id) {
 		Map<String, String> map = new HashMap<String, String>();

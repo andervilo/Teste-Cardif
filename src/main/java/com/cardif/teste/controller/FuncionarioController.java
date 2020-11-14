@@ -27,7 +27,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.cardif.teste.model.dto.FuncionarioInputDTO;
 import com.cardif.teste.model.dto.FuncionarioOutputDTO;
+import com.cardif.teste.model.entity.Departamento;
 import com.cardif.teste.model.entity.Funcionario;
+import com.cardif.teste.service.DepartamentoService;
 import com.cardif.teste.service.FuncionarioService;
 
 import io.swagger.annotations.Api;
@@ -41,10 +43,13 @@ public class FuncionarioController {
 	@Autowired
 	private FuncionarioService funcionarioService;
 	
+	@Autowired
+	private DepartamentoService departamentoService;
+	
 	private ModelMapper mapper = new ModelMapper();
 
 	@GetMapping("/")
-	@ApiOperation(value = "Obter Funcionários.")
+	@ApiOperation(value = "Obter lista.")
 	public ResponseEntity<Page<FuncionarioOutputDTO>> listAll(Pageable pageable) {
 		Page<FuncionarioOutputDTO> entities = funcionarioService.findAll(pageable)
 				 .map((funcionario -> mapper.map(funcionario, FuncionarioOutputDTO.class)));
@@ -53,7 +58,7 @@ public class FuncionarioController {
 	}
 
 	@GetMapping("/{id}")
-	@ApiOperation(value = "Obter Funcionário por ID.")
+	@ApiOperation(value = "Obter por ID.")
 	public ResponseEntity<FuncionarioOutputDTO> showById(@PathVariable Long id) {
 		if(!funcionarioService.getRepository().existsById(id)) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado!");
@@ -67,7 +72,7 @@ public class FuncionarioController {
 	}
 
 	@PostMapping(value="/")
-	@ApiOperation(value = "Criar novo Funcionário.", response = FuncionarioOutputDTO.class)
+	@ApiOperation(value = "Criar.", response = FuncionarioOutputDTO.class)
 	public ResponseEntity<FuncionarioOutputDTO> create(@Valid @RequestBody FuncionarioInputDTO funcionarioInputDTO) {
 		Funcionario funcionario = mapper.map(funcionarioInputDTO, Funcionario.class);
 		
@@ -83,7 +88,7 @@ public class FuncionarioController {
 	}
 
 	@PutMapping(value="/{id}")
-	@ApiOperation(value = "Atualizar Funcionário por ID.")
+	@ApiOperation(value = "Alterar.")
 	public ResponseEntity<FuncionarioOutputDTO> update(@PathVariable Long id, @RequestBody FuncionarioInputDTO funcionarioInputDTO) {
 		if(!funcionarioService.getRepository().existsById(id)) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado!");
@@ -110,7 +115,7 @@ public class FuncionarioController {
 	}
 
 	@DeleteMapping("/{id}")
-	@ApiOperation(value = "Excluir Funcionário por ID.")
+	@ApiOperation(value = "Excluir.")
 	public ResponseEntity<?> delete(@PathVariable Long id) {
 		if(!funcionarioService.getRepository().existsById(id)) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado!");
@@ -132,6 +137,27 @@ public class FuncionarioController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado!");
 		}
 		return ResponseEntity.ok(funcionarioService.getDepartamentosOfFuncionarioById(id));
+	}
+	
+	@PutMapping("/{idFunc}/alterar/depatamento/{idDept}")
+	@ApiOperation(value = "Alterar departamento atual do funcionário.")
+	public ResponseEntity<FuncionarioOutputDTO> getAlterarDepartamento(@PathVariable Long idFunc, @PathVariable Long idDept) {
+		if(!funcionarioService.getRepository().existsById(idFunc)) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Funcionário não encontrado!");
+		}
+		if(!departamentoService.getRepository().existsById(idDept)) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Departamento não encontrado!");
+		}
+		
+		Funcionario funcionario = funcionarioService.findById(idFunc);
+		
+		Departamento departamento = departamentoService.findById(idDept);
+		
+		funcionario.setDepartamento(departamento);
+		
+		funcionarioService.update(idFunc, funcionario);
+		
+		return ResponseEntity.ok(mapper.map(funcionario, FuncionarioOutputDTO.class));
 	}
 	
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
