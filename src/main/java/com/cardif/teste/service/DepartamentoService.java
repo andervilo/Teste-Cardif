@@ -76,7 +76,28 @@ public class DepartamentoService extends GenericServiceimpl<Departamento, Depart
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Departamento não encontrado!");
 		}
 		
-		Departamento departamento = this.findById(id);
+		Departamento departamento = findById(id);
+		if(departamento.getChefe() == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Departamento não possui Chefe definido!");
+		}
 		return mapper.map(departamento.getChefe(), FuncionarioOutputDTO.class);
+	}
+
+	public DepartamentoOutputDTO removeChefe(Long id) {
+		if(!getRepository().existsById(id)) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Departamento não encontrado!");
+		}
+		
+		Departamento departamento = findById(id);
+		
+		if(departamento.getChefe() == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Departamento não possui Chefe definido!");
+		}
+		
+		departamento.setChefe(null);
+		
+		update(id, departamento);
+		
+		return mapper.map(departamento, DepartamentoOutputDTO.class);
 	}
 }

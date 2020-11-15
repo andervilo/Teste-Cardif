@@ -39,16 +39,22 @@ public class DepatamentoController extends AbstractRestController<Departamento, 
 		return ResponseEntity.ok(getService().findByIdDTO(id));
 	}
 
-	@PutMapping("/{idDept}/definir/chefe/{idFunc}")
+	@PutMapping("/{idDept}/chefe/definir/{idFunc}")
 	@ApiOperation(value = "Definir chefe do Departamento.")
 	public ResponseEntity<DepartamentoOutputDTO> setChefe(@PathVariable Long idDept, @PathVariable Long idFunc) {
 		return ResponseEntity.ok(getService().setChefe(idDept, idFunc));
 	}
 
-	@GetMapping("/{id}/chefe")
+	@GetMapping("/{id}/chefe/obter")
 	@ApiOperation(value = "Obter chefe do Departamento.")
 	public ResponseEntity<FuncionarioOutputDTO> getChefe(@PathVariable Long id) {
 		return ResponseEntity.ok(getService().getChefe(id));
+	}
+	
+	@PutMapping("/{id}/chefe/remover")
+	@ApiOperation(value = "Remover chefe do Departamento.")
+	public ResponseEntity<DepartamentoOutputDTO> removeChefe(@PathVariable Long id) {
+		return ResponseEntity.ok(getService().removeChefe(id));
 	}
 
 	@GetMapping("/{id}/funcionarios")
