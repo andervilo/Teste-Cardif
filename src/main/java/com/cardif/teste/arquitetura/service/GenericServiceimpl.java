@@ -21,7 +21,7 @@ public class GenericServiceimpl<E extends BaseEntity, R extends JpaRepository<E,
 	}
 
 	@Override
-	public Page<E> findAll(Pageable pageable) {
+	public Page<?> findAll(Pageable pageable) {
 		return repository.findAll(pageable);
 	}
 
