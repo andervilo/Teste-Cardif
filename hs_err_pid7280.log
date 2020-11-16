@@ -1,0 +1,95 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  EXCEPTION_STACK_OVERFLOW (0xc00000fd) at pc=0x00000000688cb4eb, pid=7280, tid=0x000000000000048c
+#
+# JRE version: Java(TM) SE Runtime Environment (8.0_261-b12) (build 1.8.0_261-b12)
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (25.261-b12 mixed mode windows-amd64 compressed oops)
+# Problematic frame:
+# V  [jvm.dll+0x21b4eb]
+#
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000001aed985a800):  GCTaskThread [stack: 0x0000005096600000,0x0000005096700000] [id=1164]
+
+siginfo: ExceptionCode=0xc00000fd, ExceptionInformation=0x0000000000000001 0x00000050966fbfb0 
+
+Registers:
+RAX=0x0000000000000003, RBX=0x0000000000000003, RCX=0x00000050966fbfb0, RDX=0x0000000000002000
+RSP=0x00000050966fdfb0, RBP=0x00000050966fe0b0, RSI=0x0000000000000003, RDI=0x000001aeec9668b8
+R8 =0x000000000000000c, R9 =0x000000000000000d, R10=0x000001aed9856b20, R11=0x000001aeec9668b8
+R12=0x000001aed9859cf8, R13=0x00000050966fe2a0, R14=0x00000050966fe320, R15=0x00000050966fdfb0
+RIP=0x00000000688cb4eb, EFLAGS=0x0000000000010206
+
+Top of Stack: (sp=0x00000050966fdfb0)
+0x00000050966fdfb0:   000001aed985a800 0000000000000001
+0x00000050966fdfc0:   000001aeec9668b8 00000000ffffffff
+0x00000050966fdfd0:   0000000000000000 000001aef03f1c00
+0x00000050966fdfe0:   0000000000000000 000001aed985a800
+0x00000050966fdff0:   0000000a00000000 000001aeec9668b8
+0x00000050966fe000:   000001aed985a800 000001aedb1b49a0
+0x00000050966fe010:   0000000000000000 0000000000000000
+0x00000050966fe020:   0000000000000000 0000000000000000
+0x00000050966fe030:   0000000000000000 0000000000000000
+0x00000050966fe040:   0000000000000000 0000000000000000
+0x00000050966fe050:   0000000000000000 0000000000000000
+0x00000050966fe060:   0000000000000000 0000000000000000
+0x00000050966fe070:   0000000000000000 0000000000000000
+0x00000050966fe080:   0000000000000000 0000000000000000
+0x00000050966fe090:   000001aed9859cf8 0000000000000000
+0x00000050966fe0a0:   0000000000000000 0000000000000000 
+
+Instructions: (pc=0x00000000688cb4eb)
+0x00000000688cb4cb:   f8 7c 33 48 8b de e8 5a 96 08 00 48 63 d0 ff c6
+0x00000000688cb4db:   48 0f af d3 49 8b cf 48 63 c6 48 2b ca 48 ff c3
+0x00000000688cb4eb:   c7 01 00 00 00 00 48 3b 05 d8 ce 55 00 7e d7 48
+0x00000000688cb4fb:   8b 9d e8 00 00 00 48 8d 54 24 48 48 8d 4d 50 e8 
+
+
+Register to memory mapping:
+
+RAX=0x0000000000000003 is an unknown value
+RBX=0x0000000000000003 is an unknown value
+RCX=0x00000050966fbfb0 is an unknown value
+RDX=0x0000000000002000 is an unknown value
+RSP=0x00000050966fdfb0 is an unknown value
+RBP=0x00000050966fe0b0 is an unknown value
+RSI=0x0000000000000003 is an unknown value
+RDI={method} {0x000001aeec9668c0} '<init>' '(Ljava/lang/String;)V' in 'java/lang/LinkageError'
+R8 =0x000000000000000c is an unknown value
+R9 =0x000000000000000d is an unknown value
+R10=0x000001aed9856b20 is an unknown value
+R11={method} {0x000001aeec9668c0} '<init>' '(Ljava/lang/String;)V' in 'java/lang/LinkageError'
+R12=0x000001aed9859cf8 is an unknown value
+R13=0x00000050966fe2a0 is an unknown value
+R14=0x00000050966fe320 is an unknown value
+R15=0x00000050966fdfb0 is an unknown value
+
+
+Stack: [0x0000005096600000,0x0000005096700000],  sp=0x00000050966fdfb0,  free space=1015k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x21b4eb]
+V  [jvm.dll+0x33e512]
+V  [jvm.dll+0x21bb51]
+V  [jvm.dll+0x27d995]
+V  [jvm.dll+0x27dbdd]
+V  [jvm.dll+0x27dd29]
+V  [jvm.dll+0x11a407]
+V  [jvm.dll+0x116f48]
+V  [jvm.dll+0x11622b]
+V  [jvm.dll+0x1154ea]
+V  [jvm.dll+0xdccbb]
+V  [jvm.dll+0xdd864]
+V  [jvm.dll+0x1222f4]
+V  [jvm.dll+0x145520]
+V  [jvm.dll+0x215c69]
+V  [jvm.dll+0x21557b]
+V  [jvm.dll+0x24bd0f]
+V  [jvm.dll+0x3e5b4a]
+V  [jvm.dll+0x3d4409]

@@ -1,5 +1,6 @@
 package com.cardif.teste.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,10 +48,14 @@ public class DepartamentoService extends GenericServiceimpl<Departamento, Depart
 		}
 		Departamento departamento = this.findById(id);
 		
-		List<FuncionarioOutputDTO> listFuncionarios = (List<FuncionarioOutputDTO>) departamento.getFuncionarios().stream().map(
-				(funcionario -> mapper.map(funcionario, FuncionarioOutputDTO.class))
-				).collect(Collectors.toList());
+		List<FuncionarioOutputDTO> listFuncionarios = new ArrayList<FuncionarioOutputDTO>();
 		
+		departamento.getFuncionarios().forEach(funcionario -> {
+			if(funcionario.getDepartamento().getId() == departamento.getId()) {
+				listFuncionarios.add(mapper.map(funcionario, FuncionarioOutputDTO.class));
+			}
+		});
+			
 		return listFuncionarios;
 	}
 	
