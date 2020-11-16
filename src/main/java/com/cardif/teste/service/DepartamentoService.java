@@ -19,6 +19,9 @@ import com.cardif.teste.model.entity.Departamento;
 import com.cardif.teste.model.entity.Funcionario;
 import com.cardif.teste.repository.DepartamentoRepository;
 
+import org.modelmapper.TypeToken;
+import java.lang.reflect.Type;
+
 @Service
 public class DepartamentoService extends GenericServiceimpl<Departamento, DepartamentoRepository>{
 	
@@ -42,6 +45,7 @@ public class DepartamentoService extends GenericServiceimpl<Departamento, Depart
 		return mapper.map(departamento, DepartamentoOutputDTO.class);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<FuncionarioOutputDTO> getFuncionarios(Long id){
 		if(!getRepository().existsById(id)) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Departamento não encontrado!");
@@ -50,11 +54,9 @@ public class DepartamentoService extends GenericServiceimpl<Departamento, Depart
 		
 		List<FuncionarioOutputDTO> listFuncionarios = new ArrayList<FuncionarioOutputDTO>();
 		
-		departamento.getFuncionarios().forEach(funcionario -> {
-			if(funcionario.getDepartamento().getId() == departamento.getId()) {
-				listFuncionarios.add(mapper.map(funcionario, FuncionarioOutputDTO.class));
-			}
-		});
+		Type listType = new TypeToken<List<FuncionarioOutputDTO>>(){}.getType();
+		
+		listFuncionarios = (List<FuncionarioOutputDTO>) mapper.map(funcionarioService.getFuncionariosByDepartamento(departamento), listType);
 			
 		return listFuncionarios;
 	}
