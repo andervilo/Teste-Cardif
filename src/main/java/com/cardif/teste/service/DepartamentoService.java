@@ -33,11 +33,9 @@ public class DepartamentoService extends GenericServiceimpl<Departamento, Depart
 	@Override
 	public Page<DepartamentoOutputDTO> findAll(Pageable pageable) {
 		Page<Departamento> depPage = (Page<Departamento>) super.findAll(pageable);
-		
-		Page<DepartamentoOutputDTO> page = (Page<DepartamentoOutputDTO>) depPage.map(
-				(departamento -> mapper.map(departamento, DepartamentoOutputDTO.class))
-				);
-		return page;
+		Type listType = new TypeToken<Page<DepartamentoOutputDTO>>(){}.getType();
+
+		return mapper.map(depPage, listType);
 	}
 	
 	public DepartamentoOutputDTO findByIdDTO(Long id) {
@@ -54,7 +52,7 @@ public class DepartamentoService extends GenericServiceimpl<Departamento, Depart
 		
 		List<FuncionarioOutputDTO> listFuncionarios = new ArrayList<FuncionarioOutputDTO>();
 		
-		Type listType = new TypeToken<List<FuncionarioOutputDTO>>(){}.getType();
+		Type listType = new TypeToken<List<FuncionarioOutputDTO>>(){}.getType();		
 		
 		listFuncionarios = (List<FuncionarioOutputDTO>) mapper.map(funcionarioService.getFuncionariosByDepartamento(departamento), listType);
 			
